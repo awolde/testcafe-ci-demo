@@ -36,6 +36,10 @@ test('Dealing with text using keyboard', async t => {
         .pressKey('backspace')                              // Erase a character
         .expect(page.nameInput.value).eql('Pete Parker')    // Check result
         .pressKey('home right . delete delete delete')      // Pick even shorter form for name
+        .takeScreenshot({
+            path:     'keyboard.png',
+            fullPage: true
+        })
         .expect(page.nameInput.value).eql('P. Parker');     // Check result
 });
 
@@ -45,6 +49,10 @@ test('Moving the slider', async t => {
 
     await t
         .click(page.triedTestCafeCheckbox)
+        .takeScreenshot({
+            path:     'slide.png',
+            fullPage: true
+        })
         .dragToElement(page.slider.handle, page.slider.tick.withText('9'))
         .expect(page.slider.handle.offsetLeft).gt(initialOffset);
 });
@@ -55,6 +63,10 @@ test('Dealing with text using selection', async t => {
         .typeText(page.nameInput, 'Test Cafe')
         .selectText(page.nameInput, 7, 1)
         .pressKey('delete')
+        .takeScreenshot({
+            path:     'text.png',
+            fullPage: true
+        })
         .expect(page.nameInput.value).eql('Tfe');   // Check result
 });
 
@@ -70,6 +82,10 @@ test('Handle native confirmation dialog', async t => {
 
     await t
         .click(page.submitButton)
+        .takeScreenshot({
+            path:     'inner.png',
+            fullPage: true
+        })
         .expect(page.results.innerText).contains('Peter Parker');
 });
 
@@ -78,6 +94,10 @@ test('Pick option from select', async t => {
     await t
         .click(page.interfaceSelect)
         .click(page.interfaceSelectOption.withText('Both'))
+        .takeScreenshot({
+            path:     'interface.png',
+            fullPage: true
+        })
         .expect(page.interfaceSelect.value).eql('Both');
 });
 
@@ -100,11 +120,19 @@ test('Filling a form', async t => {
         .wait(500)
         .selectTextAreaContent(page.commentsTextArea, 1, 0)
         .pressKey('delete')
+        .takeScreenshot({
+            path:     'delete.png',
+            fullPage: true
+        })
         .typeText(page.commentsTextArea, 'awesome!!!');
 
     // Let's submit our form
     await t
         .wait(500)
         .click(page.submitButton)
+        .takeScreenshot({
+            path:     'submit.png',
+            fullPage: true
+        })
         .expect(page.results.innerText).contains('Bruce Wayne');
 });
